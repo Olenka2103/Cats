@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import requests
 from io import BytesIO
 
-def load_image():
+def load_image(url):
     try:
         response = requests.get(url) #делаем запрос по этой ссылке и то, что получим положим в переменную
         response.raise_for_status() #обработка исключений - если будет какая то ошибка, тут эту ошибку получим
@@ -16,6 +16,14 @@ def load_image():
         return None #обязательно вернём результат, если всё хорошо - картинка, если ошибка - текст ошибки в консоль
 
 
+def set_image():
+    img = load_image(url)
+
+    if img:
+        label.config(image=img)
+        label.image = img
+
+
 window = Tk()
 window.title('Cats')
 window.geometry('600x480')
@@ -23,11 +31,11 @@ window.geometry('600x480')
 label = Label()
 label.pack()
 
-url = 'https://cataas.com/cat'
-img = load_image(url)
+upd_button = Button(text='Обновить картинку', command=set_image)
+upd_button.pack()
 
-if img:
-    label.config(image=img)
-    label.image = img
+url = 'https://cataas.com/'
+
+set_image()
 
 window.mainloop()
