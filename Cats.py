@@ -18,7 +18,9 @@ def load_image(url):
 
 
 def open_new_window():
-    img = load_image(url)
+    tag = tag_entry.get()
+    url_tag = f'https://cataas.com/{tag}' if tag else 'https://cataas.com/cat'
+    img = load_image(url_tag)
 
     if img:
         new_window = Toplevel() # открываем новое окно
@@ -35,6 +37,13 @@ def exit():
 window = Tk()
 window.title('Cats')
 window.geometry('600x520')
+
+tag_entry = Entry()
+tag_entry.pack()
+
+load_button = Button(text='Загрузить по тегу', command=open_new_window)
+load_button.pack()
+
 main_menu = Menu(window)
 window.config(menu=main_menu)
 
@@ -51,7 +60,7 @@ filemenu.add_command(label='Выход', command=exit)
 # upd_button = Button(text='Обновить картинку', command=set_image, bg='#6b4294', fg='#dad0e4')
 # upd_button.pack()
 
-url = 'https://cataas.com/'
+url = 'https://cataas.com/cat'
 
 open_new_window()
 
